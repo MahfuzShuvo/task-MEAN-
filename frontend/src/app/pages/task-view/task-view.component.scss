@@ -1,0 +1,93 @@
+@import '../../../main-styles.scss';
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.task-manager-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 720px;
+    max-height: 480px;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    width: 200px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    .list-menu {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        flex-grow: 1;
+        .list-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            width: 100%;
+            color: $dark-color;
+            font-size: 12px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            &:hover {
+                background: $extra-light-color;
+            }
+            &.is-active {
+                background-color: $primary-color;
+                color: #fff;
+            }
+        }
+    }
+    .button {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+}
+.task-list-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    .task {
+        background: #fff;
+        padding: 8px 10px;
+        border-radius: 8px;
+        margin-top: 10px;
+
+        &:not(.complete) {
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+            
+            &:hover {
+                box-shadow: 0 0 0 3px rgba(238, 238, 238, 0.741);
+            }
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+        &.complete {
+            text-decoration: line-through;
+            background: #fafafa;
+        }
+        p{
+            font-size: 12px;
+            color: $dark-color;
+        }
+    }
+}
+.title {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
