@@ -7,7 +7,7 @@
                     <p>{{ list.title }}</p>
                 </a>
             </div>
-            <button class="button is-dark has-text-white" routerLink='/new-list'>+ New</button>
+            <button class="button is-primary has-text-white" routerLink='/new-list'>+ New</button>
         </div>
         <div class="task-list-container has-background-light">
             <h1 class="title has-text-primary"> Tasks</h1>
@@ -15,6 +15,10 @@
             <div class="task" *ngFor="let task of tasks">
                 <p>{{ task.title }}</p>
             </div>
+
+            <button class="button circle-add-button" routerLink='./new-task'>
+                <p>+</p>
+            </button>
         </div>
     </div>
 </div>
