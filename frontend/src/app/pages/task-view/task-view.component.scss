@@ -1,12 +1,5 @@
 @import '../../../main-styles.scss';
 
-.centered-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
 .task-manager-container {
     display: flex;
     width: 100%;
@@ -39,7 +32,7 @@
                 background: $extra-light-color;
             }
             &.is-active {
-                background-color: $primary-color;
+                background-color: $light-color;
                 color: #fff;
             }
         }
@@ -83,11 +76,4 @@
             color: $dark-color;
         }
     }
-}
-.title {
-    font-family: 'Lato', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
