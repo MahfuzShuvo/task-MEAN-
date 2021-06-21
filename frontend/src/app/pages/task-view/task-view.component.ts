@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/service/task.service';
 
 @Component({
@@ -27,6 +28,14 @@ export class TaskViewComponent implements OnInit {
     this.taskService.getLists().subscribe((lists: any) => {
       this.lists = lists;
     });
+  }
+
+  onTaskClick(task: Task) {
+    // set the task to completed
+    this.taskService.complete(task).subscribe(() => {
+      console.log('Task completed');
+      task.isCompleted = !task.isCompleted;
+    })
   }
 
 }
