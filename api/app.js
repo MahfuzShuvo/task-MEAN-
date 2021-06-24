@@ -180,18 +180,17 @@ app.delete('/lists/:id', authenticate, (req, res) => {
 app.get('/lists/:listId/tasks', authenticate, (req, res) => {
     // return all tasks that belong to a specific list specified by listId
     Task.find({
-        _listId: req.params.listId,
-        _userId: req.user_id
+        _listId: req.params.listId
     }).then((tasks) => {
         res.send(tasks);
     });
 });
 
-// app.get('/lists/:listId/tasks/:taskId', authenticate, (req, res) => {
+// app.get('/lists/:listId/tasks/:taskId', (req, res) => {
 //     Task.findOne({
 //         _id: req.params.taskId,
 //         _listId: req.params.listId,
-//         _userId: req.user_id
+//         // _userId: req.user_id
 //     }).then((task) => {
 //         res.send(task);
 //     });

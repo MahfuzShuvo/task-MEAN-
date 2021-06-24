@@ -54,7 +54,7 @@ UserSchema.methods.generateAccessAuthToken = function() {
     const user = this;
     return new Promise((resolve, reject) => {
         // create JSON Web Token and return 
-        jwt.sign({_id: user._id.toHexString()}, jwtSecret, { expiresIn: '15min'}, (err, token) => {
+        jwt.sign({_id: user._id.toHexString()}, jwtSecret, { expiresIn: '15sec'}, (err, token) => {
             if(!err) {
                 resolve(token);
             } else {
@@ -184,3 +184,8 @@ let generateRefreshTokenExpiryTime = () => {
 const User = mongoose.model('User', UserSchema);
 
 module.exports = { User }
+
+
+
+
+

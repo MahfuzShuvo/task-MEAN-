@@ -22,26 +22,61 @@ export class AuthService {
     )
   }
 
-  logout() {
-    this.removeSession();
+  register(name: string, contact: string, email: string, password: string) {
+    return this.webService.register(name, contact, email, password).pipe(
+      shareReplay(),
+      tap((res: HttpResponse<any>) => {
+        // auth tokens will be in the header of this response 
+        this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+        console.log('Registerd');
+      })
+    )
   }
 
-  getAccessToken() {
-    return localStorage.getItem('x-access-item');
+  logout() {
+    this.removeSession();
+    this.router.navigate(['/login']);
   }
-  setAccessToken(accessToken: string) {
+
+  getAccessToken(): string {
+    return localStorage.getItem('x-access-token') || '';
+  }
+
+  getRefreshToken(): string {
+    return localStorage.getItem('x-refresh-token') || '';
+  }
+
+  getUserId(): string {
+    return localStorage.getItem('user-id') || '';
+  }
+
+  setAccessToken(accessToken: any) {
     return localStorage.setItem('x-access-token', accessToken);
   }
 
   private setSession(userId: string, accessToken: any, refreshToken: any) {
     localStorage.setItem('user-id', userId);
-    localStorage.setItem('access-token', accessToken);
-    localStorage.setItem('refresh-token', refreshToken);
+    localStorage.setItem('x-access-token', accessToken);
+    localStorage.setItem('x-refresh-token', refreshToken);
   }
 
   private removeSession() {
     localStorage.removeItem('user-id');
-    localStorage.removeItem('access-token');
-    localStorage.removeItem('refresh-token');
+    localStorage.removeItem('x-access-token');
+    localStorage.removeItem('x-refresh-token');
+  }
+
+  getNewAccessToken() {
+    return this.http.get(`${this.webService.ROOT_URL}/users/me/access-token`, {
+      headers: {
+        'x-refresh-token': this.getRefreshToken(),
+        '_id': this.getUserId()
+      },
+      observe: 'response'
+    }).pipe(
+      tap((res: HttpResponse<any>) => {
+        this.setAccessToken(res.headers.get('x-access-token'));
+      })
+    )
   }
 }

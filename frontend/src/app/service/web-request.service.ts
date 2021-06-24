@@ -36,4 +36,15 @@ export class WebRequestService {
         observe: 'response' 
     });
   }
+
+  register(name: string, contact: string, email: string, password: string) {
+    return this.http.post(`${this.ROOT_URL}/users`, {
+      name,
+      contact,
+      email,
+      password
+    }, { 
+        observe: 'response' 
+    });
+  }
 }

@@ -4,7 +4,7 @@
 
         <div class="field">
             <p class="control has-icons-left has-icons-right">
-                <input class="input has-background-light is-small" type="text" placeholder="Name" autocomplete="new-name">
+                <input #nameInput class="input has-background-light is-small" type="text" placeholder="Name" autocomplete="new-name">
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -12,7 +12,7 @@
         </div>
         <div class="field">
             <p class="control has-icons-left has-icons-right">
-                <input class="input has-background-light is-small" type="text" placeholder="Contact" autocomplete="new-phone">
+                <input #contactInput class="input has-background-light is-small" type="text" placeholder="Contact" autocomplete="new-phone">
                 <span class="icon is-small is-left">
                     <i class="fas fa-phone"></i>
                 </span>
@@ -20,7 +20,7 @@
         </div>
         <div class="field">
             <p class="control has-icons-left has-icons-right">
-                <input class="input has-background-light is-small" type="email" placeholder="Email" autocomplete="new-email">
+                <input #emailInput class="input has-background-light is-small" type="email" placeholder="Email" autocomplete="new-email">
                 <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                 </span>
@@ -28,7 +28,7 @@
         </div>
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input has-background-light is-small" type="password" placeholder="Password" autocomplete="new-password">
+                <input #passwordInput class="input has-background-light is-small" type="password" placeholder="Password" autocomplete="new-password">
                 <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                 </span>
@@ -36,7 +36,7 @@
         </div>
         <div class="field is-pulled-right">
             <p class="control">
-                <button class="button is-primary is-small">Sign up</button>
+                <button class="button is-primary is-small" (click)="onRegisterClick(nameInput.value, contactInput.value, emailInput.value, passwordInput.value)">Sign up</button>
             </p>
         </div>
     </div>

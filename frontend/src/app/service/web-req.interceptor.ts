@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { empty, Observable, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,7 +9,9 @@ import { AuthService } from './auth.service';
 })
 export class WebReqInterceptor implements HttpInterceptor {
 
-  constructor(private auuthService: AuthService) { }
+  constructor(private authService: AuthService) { }
+
+  refreshingAccessToken!: boolean;
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // handle the request 
@@ -19,14 +21,42 @@ export class WebReqInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+
+        if (error.status === 401 && !this.refreshingAccessToken) {
+          // 401 error: unauthorized
+          // refresh the access token 
+          return this.refreshAccessToken().pipe(
+            switchMap(() => {
+              request = this.addAuthHeader(request);
+              return next.handle(request);
+            }),
+            catchError((err: any) => {
+              console.log(err);
+              this.authService.logout();
+              return empty();
+            })
+          )
+        }
+        
         return throwError(error);
+      })
+    )
+  }
+
+  refreshAccessToken() {
+    this.refreshingAccessToken = true;
+    // call a method in the auth service to send a request to refresh access token 
+    return this.authService.getNewAccessToken().pipe(
+      tap(() => {
+        this.refreshingAccessToken = false;
+        console.log('access token refreshed');
       })
     )
   }
 
   addAuthHeader(request: HttpRequest<any>) {
     // get the access token 
-    const token = this.auuthService.getAccessToken();
+    const token = this.authService.getAccessToken();
     
     if (token) {
       // append the access token to the request header 
