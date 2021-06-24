@@ -11,16 +11,55 @@
         </div>
         <div class="task-list-container has-background-light">
             <div *ngIf="tasks">
-                <h1 class="title has-text-primary"> Tasks</h1>
+                <!-- task header  -->
+                <div class="task-header">
+                    <h1 class="title has-text-primary"> Tasks</h1>
+
+                    <div class="dropdown is-hoverable is-right" style="padding: 0px 30px 0px 30px;">
+                        <div class="dropdown-trigger">
+                            <button class="button settings-btn" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                <span class="icon is-small">
+                                    <i class="fas fa-tools" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu mr-5" id="dropdown-menu4" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" [routerLink]="['/edit-list', selectedListId]">
+                                    Edit
+                                </a>
+                                <a class="dropdown-item" (click)="onListDeleteClick()">
+                                    Delete
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" style="font-weight: bold;">
+                                    Logout
+                                    <i class="fas fa-sign-out-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- task elemenets -->
                 <div class="task-body">
                     <div class="task" *ngFor="let task of tasks" (click)="onTaskClick(task)" [ngClass]="{'complete' : task.isCompleted}">
-                        <p>{{ task.title }}</p>
-                    </div>
-                </div>
+                        <div class="task-text">
+                            <p>{{ task.title }}</p>
+                        </div>
 
-                <div *ngIf="tasks.length == 0">
-                    <h4 class="title empty-state-text">There are no <span style="color: #8A37D2;">tasks</span> in the list</h4>
+                        <div class="task-button">
+                            <button class="button is-small mr-1" [routerLink]="['/lists', selectedListId, 'edit-task', task._id]">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="button is-small" (click)="onTaskDeleteClick(task._id)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="tasks.length == 0">
+                        <h4 class="title empty-state-text pt-2">There are no <span style="color: #8A37D2;">tasks</span> in the list</h4>
+                    </div>
                 </div>
     
                 <button class="button circle-add-button" routerLink='./new-task'>
@@ -28,7 +67,15 @@
                 </button>
             </div>
             <div *ngIf="!tasks">
-                <h4 class="title empty-state-text">Please select a <span style="color: #8A37D2;">list</span> from <span style="color: #8A37D2;">sidebar</span></h4>
+                <div class="task-header">
+                    <h4 class="title empty-state-text">Please select a <span style="color: #8A37D2;">list</span> from <span style="color: #8A37D2;">sidebar</span></h4>
+                    <div class="logout-button">
+                        <a href="#" class="dropdown-item" style="font-weight: bold; font-size: 11px;">
+                            Logout
+                            <i class="fas fa-sign-out-alt ml-2"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
