@@ -18,10 +18,15 @@
                 </span>
             </p>
         </div>
-        <div class="field is-pulled-right">
-            <p class="control">
-                <button class="button is-primary is-small" (click)="onLoginClick(emailInput.value, passwordInput.value)">Login</button>
-            </p>
+        <div class="bottom-part">
+            <div class="register-page-link">
+                <p>Don't have an Account? <a routerLink='/register'>click here</a> for register</p>
+            </div>
+            <div class="field is-pulled-right">
+                <p class="control">
+                    <button class="button is-primary is-small" (click)="onLoginClick(emailInput.value, passwordInput.value)">Login</button>
+                </p>
+            </div>
         </div>
     </div>
 </div>

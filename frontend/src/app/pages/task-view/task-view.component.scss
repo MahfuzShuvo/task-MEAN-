@@ -14,6 +14,24 @@
     width: 200px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    .list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 75px;
+        .settings-btn {
+            border: none;
+            background: transparent;
+            color: #b5b5b5;
+            transition: all 0.5s ease;
+            &:hover {
+                color: #888;
+            }
+        }
+        .dropdown-menu {
+            min-width: 8rem;
+        }
+    }
     .list-menu {
         display: flex;
         flex-direction: column;
@@ -68,6 +86,18 @@
             transition: all 0.5s ease;
             &:hover {
                 color: #888;
+            }
+            .user-name {
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+        .dropdown-menu {
+            .dropdown-content {
+                a {
+                    text-align: right;
+                    padding-right: 1rem !important;
+                }
             }
         }
     }
@@ -158,8 +188,12 @@
     }
 }
 .dropdown-menu {
-    min-width: 8rem !important;
-    .dropdown-content a {
-        font-size: 11px;
+    .dropdown-content {
+        a {
+            font-size: 11px;
+        }
+        p {
+            font-size: 11px;
+        }
     }
 }

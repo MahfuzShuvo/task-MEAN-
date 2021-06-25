@@ -24,6 +24,14 @@ export class WebReqInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         console.log(error);
 
+        if (error.status === 401 && request.url.endsWith('/users/me/access-token')) {
+          // then this means that the refresh token has expired
+          console.log("refresh token expired");
+          this.refreshingAccessToken = false;
+          this.authService.logout();
+          return empty();
+        }
+
         if (error.status === 401) {
           // 401 error: unauthorized
 
@@ -34,7 +42,9 @@ export class WebReqInterceptor implements HttpInterceptor {
               return next.handle(request);
             }),
             catchError((err: any) => {
+              console.log('Catching error');
               console.log(err);
+              this.refreshingAccessToken = false;
               this.authService.logout();
               return empty();
             })

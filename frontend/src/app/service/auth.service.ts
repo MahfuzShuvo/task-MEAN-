@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebRequestService } from './web-request.service';
 import { shareReplay, tap } from 'rxjs/operators';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
       tap((res: HttpResponse<any>) => {
         // auth tokens will be in the header of this response 
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+        this.setUserDetails(res.body.name, res.body.email,  res.body.contact);
         console.log('logged in');
       })
     )
@@ -28,6 +30,7 @@ export class AuthService {
       tap((res: HttpResponse<any>) => {
         // auth tokens will be in the header of this response 
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+        this.setUserDetails(res.body.name, res.body.email,  res.body.contact);
         console.log('Registerd');
       })
     )
@@ -35,7 +38,22 @@ export class AuthService {
 
   logout() {
     this.removeSession();
+    this.removeUserDetails();
     this.router.navigate(['/login']);
+  }
+
+  getUserDetails(): User {
+    let _id = localStorage.getItem('userId') || '';
+    let name = localStorage.getItem('name') || '';
+    let contact = localStorage.getItem('contact') || '';
+    let email = localStorage.getItem('email') || '';
+    return { _id, name, contact, email }
+  }
+
+  setUserDetails(name: string, email: string, contact: string) {
+    localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
+    localStorage.setItem('contact', contact);
   }
 
   getAccessToken(): string {
@@ -64,6 +82,11 @@ export class AuthService {
     localStorage.removeItem('user-id');
     localStorage.removeItem('x-access-token');
     localStorage.removeItem('x-refresh-token');
+  }
+
+  private removeUserDetails() {
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
   }
 
   getNewAccessToken() {

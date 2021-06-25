@@ -1,7 +1,30 @@
 <div class="centered-content">
     <div class="task-manager-container">
         <div class="sidebar has-background-white">
-            <h1 class="title has-text-primary"> Lists</h1>
+            <div class="list-header">
+                <h1 class="title has-text-primary"> Lists</h1>
+
+                <div *ngIf="tasks" class="dropdown is-hoverable is-right" style="padding-top: 7px;">
+                    <div class="dropdown-trigger">
+                        <button class="button settings-btn" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                                <i class="fas fa-tools" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu mr-5" id="dropdown-menu4" role="menu">
+                        <div class="dropdown-content">
+                            <a class="dropdown-item" [routerLink]="['/edit-list', selectedListId]">
+                                Edit
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item" (click)="onListDeleteClick()">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="list-menu">
                 <a class="list-menu-item" *ngFor="let list of lists" [routerLink]="['/lists', list._id]" routerLinkActive="is-active">
                     <p>{{ list.title }}</p>
@@ -10,35 +33,76 @@
             <button class="button is-primary has-text-white" routerLink='/new-list'>+ New</button>
         </div>
         <div class="task-list-container has-background-light">
-            <div *ngIf="tasks">
-                <!-- task header  -->
+            <div *ngIf="!tasks">
                 <div class="task-header">
-                    <h1 class="title has-text-primary"> Tasks</h1>
-
-                    <div class="dropdown is-hoverable is-right" style="padding: 0px 30px 0px 30px;">
+                    <h4 class="title empty-state-text">Please select a <span style="color: #8A37D2;">list</span> from <span style="color: #8A37D2;">sidebar</span></h4>
+                
+                    <div class="dropdown is-hoverable is-right" style="padding-right: 15px;">
                         <div class="dropdown-trigger">
                             <button class="button settings-btn" aria-haspopup="true" aria-controls="dropdown-menu4">
                                 <span class="icon is-small">
-                                    <i class="fas fa-tools" aria-hidden="true"></i>
+                                    <i class="fas fa-user-circle"></i>
                                 </span>
+                                <p class="user-name">
+                                    {{ users.name }}
+                                    <i class="fas fa-angle-down"></i>
+                                </p>
                             </button>
                         </div>
                         <div class="dropdown-menu mr-5" id="dropdown-menu4" role="menu">
                             <div class="dropdown-content">
-                                <a class="dropdown-item" [routerLink]="['/edit-list', selectedListId]">
-                                    Edit
-                                </a>
-                                <a class="dropdown-item" (click)="onListDeleteClick()">
-                                    Delete
-                                </a>
+                                <div class="dropdown-item">
+                                    <p><b>Email: </b>{{ users.email }}</p>
+                                    <p><b>Contact: </b>{{ users.contact }}</p>
+                                </div>
                                 <hr class="dropdown-divider">
-                                <a class="dropdown-item" style="font-weight: bold;">
+                                <a href="#" class="dropdown-item" style="font-weight: bold; font-size: 11px;" (click)="onLogoutClick()">
                                     Logout
                                     <i class="fas fa-sign-out-alt ml-2"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div *ngIf="tasks">
+                <!-- task header  -->
+                <div class="task-header">
+                    <h1 class="title has-text-primary"> Tasks</h1>
+
+                    <div class="dropdown is-hoverable is-right" style="padding-right: 15px;">
+                        <div class="dropdown-trigger">
+                            <button class="button settings-btn" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                <span class="icon is-small">
+                                    <i class="fas fa-user-circle"></i>
+                                </span>
+                                <p class="user-name">
+                                    {{ users.name }}
+                                    <i class="fas fa-angle-down"></i>
+                                </p>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu mr-5" id="dropdown-menu4" role="menu">
+                            <div class="dropdown-content">
+                                <div class="dropdown-item">
+                                    <p><b>Email: </b>{{ users.email }}</p>
+                                    <p><b>Contact: </b>{{ users.contact }}</p>
+                                </div>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item" style="font-weight: bold; font-size: 11px;" (click)="onLogoutClick()">
+                                    Logout
+                                    <i class="fas fa-sign-out-alt ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="logout-button">
+                        <a href="#" class="dropdown-item" style="font-weight: bold; font-size: 11px;" (click)="onLogoutClick()">
+                            Logout
+                            <i class="fas fa-sign-out-alt ml-2"></i>
+                        </a>
+                    </div> -->
                 </div>
                 <!-- task elemenets -->
                 <div class="task-body">
@@ -66,17 +130,11 @@
                     <p>+</p>
                 </button>
             </div>
-            <div *ngIf="!tasks">
+            <!-- <div *ngIf="!tasks">
                 <div class="task-header">
                     <h4 class="title empty-state-text">Please select a <span style="color: #8A37D2;">list</span> from <span style="color: #8A37D2;">sidebar</span></h4>
-                    <div class="logout-button">
-                        <a href="#" class="dropdown-item" style="font-weight: bold; font-size: 11px;">
-                            Logout
-                            <i class="fas fa-sign-out-alt ml-2"></i>
-                        </a>
-                    </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

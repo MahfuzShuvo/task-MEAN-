@@ -34,10 +34,15 @@
                 </span>
             </p>
         </div>
-        <div class="field is-pulled-right">
-            <p class="control">
-                <button class="button is-primary is-small" (click)="onRegisterClick(nameInput.value, contactInput.value, emailInput.value, passwordInput.value)">Sign up</button>
-            </p>
+        <div class="bottom-part">
+            <div class="login-page-link">
+                <p>Have an Account? <a routerLink='/login'>click here</a> for login</p>
+            </div>
+            <div class="field is-pulled-right">
+                <p class="control">
+                    <button class="button is-primary is-small" (click)="onRegisterClick(nameInput.value, contactInput.value, emailInput.value, passwordInput.value)">Sign up</button>
+                </p>
+            </div>
         </div>
     </div>
 </div>

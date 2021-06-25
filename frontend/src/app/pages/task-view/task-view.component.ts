@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Task } from 'src/app/models/task.model';
+import { AuthService } from 'src/app/service/auth.service';
 import { TaskService } from 'src/app/service/task.service';
 
 @Component({
@@ -12,10 +13,11 @@ export class TaskViewComponent implements OnInit {
 
   lists: any;
   tasks: any;
+  users: any;
 
   selectedListId!: string;
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -35,6 +37,9 @@ export class TaskViewComponent implements OnInit {
     this.taskService.getLists().subscribe((lists: any) => {
       this.lists = lists;
     });
+    
+    this.users = this.authService.getUserDetails();
+
   }
 
   onTaskClick(task: Task) {
@@ -57,6 +62,10 @@ export class TaskViewComponent implements OnInit {
       this.tasks = this.tasks.filter((val: { _id: string; }) => val._id !== id);
       console.log(res);
     });
+  }
+
+  onLogoutClick() {
+    this.authService.logout();
   }
  
 }
